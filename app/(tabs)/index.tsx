@@ -1,9 +1,8 @@
-
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import { FlatList, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useState } from 'react';
+import { FlatList, Image, Modal, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 const dummyProducts = [
   {
@@ -14,6 +13,7 @@ const dummyProducts = [
     member: true,
     verified: true,
     time: 'Just now',
+    description: 'Powerful gaming laptop with Intel i7 13th Gen, RTX 4060, 16GB RAM, and 512GB SSD. Perfect for gamers and professionals.',
   },
   {
     id: '2',
@@ -23,6 +23,7 @@ const dummyProducts = [
     member: true,
     verified: false,
     time: '5 min ago',
+    description: 'Luxury 2025 Land Cruiser ZX with advanced off-road capability, premium leather interior, and modern infotainment system.',
   },
   {
     id: '3',
@@ -32,6 +33,7 @@ const dummyProducts = [
     member: true,
     verified: true,
     time: 'Just now',
+    description: 'Healthy purebred Rottweiler puppies. Vaccinated and ready for adoption. Friendly and playful.',
   },
   {
     id: '4',
@@ -41,6 +43,7 @@ const dummyProducts = [
     member: false,
     verified: true,
     time: 'Just now',
+    description: 'Compact wireless mechanical keyboard with customizable RGB lighting and excellent battery life.',
   },
   {
     id: '5',
@@ -50,6 +53,7 @@ const dummyProducts = [
     member: true,
     verified: true,
     time: '2 min ago',
+    description: 'Apple iPhone 16 Pro Max with A18 Bionic chip, Super Retina XDR display, and pro-level cameras.',
   },
   {
     id: '6',
@@ -59,6 +63,7 @@ const dummyProducts = [
     member: false,
     verified: true,
     time: '5 min ago',
+    description: 'Well-maintained Honda Dio scooter, 2019 model. Excellent mileage and smooth performance.',
   },
   {
     id: '7',
@@ -68,6 +73,7 @@ const dummyProducts = [
     member: true,
     verified: true,
     time: '10 min ago',
+    description: 'Ultra-wide curved monitor with 34-inch display, IPS panel, USB-C hub, and multitasking features.',
   },
   {
     id: '8',
@@ -77,29 +83,31 @@ const dummyProducts = [
     member: false,
     verified: true,
     time: '15 min ago',
+    description: 'Elegant Skmei men’s watch with silver casing, white dial, and brown leather strap. Stylish and durable.',
   },
 ];
 
 export default function HomeScreen() {
-  const router = useRouter();
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
   return (
     <ThemedView style={{ flex: 1, backgroundColor: '#f6f6f6' }}>
       {/* Header */}
       <View style={styles.header}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Image
-            source={{ uri: 'data:image/png;base64,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' }}
+            source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeV76JQGujMJAlMSI_K6wjcDR7fWF5hqIsvA&s' }}
             style={{ width: 32, height: 32, marginRight: 8 }}
             resizeMode="contain"
           />
           <ThemedText style={styles.logoText}>ikman</ThemedText>
         </View>
 
-        
         <TouchableOpacity>
           <MaterialIcons name="bookmark-border" size={26} color="#fff" />
         </TouchableOpacity>
       </View>
+
       {/* Filter Row */}
       <View style={styles.filterRow}>
         <TouchableOpacity style={styles.filterBtn}>
@@ -114,17 +122,23 @@ export default function HomeScreen() {
           <MaterialIcons name="tune" size={20} color="#009970" />
         </TouchableOpacity>
       </View>
+
       {/* Product Grid */}
       <FlatList
         data={dummyProducts}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         numColumns={2}
         contentContainerStyle={styles.gridContent}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.card} onPress={() => router.push(`/cars/${item.id}`)}>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => setSelectedProduct(item)}
+          >
             <Image source={{ uri: item.image }} style={styles.image} />
             <View style={{ padding: 8 }}>
-              <ThemedText style={styles.cardTitle} numberOfLines={2}>{item.title}</ThemedText>
+              <ThemedText style={styles.cardTitle} numberOfLines={2}>
+                {item.title}
+              </ThemedText>
               <ThemedText style={styles.cardPrice}>{item.price}</ThemedText>
               <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
                 {item.member && (
@@ -136,7 +150,7 @@ export default function HomeScreen() {
                 {item.verified && (
                   <View style={styles.badgeVerified}>
                     <MaterialIcons name="verified" size={14} color="#1976d2" />
-                    <ThemedText style={styles.badgeTextBlue}>VERIFIED SELLER</ThemedText>
+                    <ThemedText style={styles.badgeTextBlue}>VERIFIED</ThemedText>
                   </View>
                 )}
               </View>
@@ -148,6 +162,34 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
         style={{ flex: 1 }}
       />
+
+      {/* Popup Modal */}
+      <Modal
+        visible={!!selectedProduct}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setSelectedProduct(null)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            {selectedProduct && (
+              <>
+                <Image source={{ uri: selectedProduct.image }} style={styles.modalImage} />
+                <ThemedText style={styles.modalTitle}>{selectedProduct.title}</ThemedText>
+                <ThemedText style={styles.modalPrice}>{selectedProduct.price}</ThemedText>
+                <ThemedText style={styles.modalTime}>{selectedProduct.time}</ThemedText>
+                <ThemedText style={styles.modalDesc}>{selectedProduct.description}</ThemedText>
+                <TouchableOpacity
+                  style={styles.closeBtn}
+                  onPress={() => setSelectedProduct(null)}
+                >
+                  <ThemedText style={{ color: '#fff', fontWeight: '600' }}>Close</ThemedText>
+                </TouchableOpacity>
+              </>
+            )}
+          </View>
+        </View>
+      </Modal>
     </ThemedView>
   );
 }
@@ -161,8 +203,6 @@ const styles = StyleSheet.create({
     paddingTop: 44,
     paddingBottom: 12,
     paddingHorizontal: 16,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
     elevation: 4,
   },
   logoText: {
@@ -171,44 +211,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     letterSpacing: 1,
   },
-  resultText: {
-    color: '#fff',
-    fontSize: 13,
-    fontWeight: '500',
-  },
-  searchBarRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 28,
-    marginHorizontal: 16,
-    marginTop: -22,
-    marginBottom: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 2,
-    elevation: 2,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 17,
-    color: '#222',
-    paddingVertical: 10,
-    backgroundColor: 'transparent',
-  },
-  searchBtn: {
-    backgroundColor: '#FFD600',
-    borderRadius: 24,
-    width: 44,
-    height: 44,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 8,
-    marginRight: -8,
-    elevation: 2,
-  },
   filterRow: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
     marginHorizontal: 8,
     marginBottom: 8,
@@ -294,5 +298,56 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#888',
     marginTop: 2,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    width: '90%',
+    alignItems: 'center',
+  },
+  modalImage: {
+    width: '100%',
+    height: 180,
+    borderRadius: 8,
+    marginBottom: 12,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#222',
+    textAlign: 'center',
+    marginBottom: 6,
+  },
+  modalPrice: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#009970',
+    marginBottom: 6,
+  },
+  modalTime: {
+    fontSize: 13,
+    color: '#777',
+    marginBottom: 12,
+  },
+  modalDesc: {
+    fontSize: 14,
+    color: '#444',
+    textAlign: 'center',
+    marginBottom: 14,
+    lineHeight: 20,
+  },
+  closeBtn: {
+    backgroundColor: '#009970',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
   },
 });
