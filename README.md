@@ -1,50 +1,124 @@
-# Welcome to your Expo app 👋
+# 📱 Ikman.lk Clone App (React Native + Expo)
+🚀 Project Description
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Ikman.lk Clone App is a beginner-friendly React Native mobile application that replicates the basic features of Ikman.lk.
 
-## Get started
+------------------
 
-1. Install dependencies
+This app demonstrates core React Native concepts such as:
 
-   ```bash
-   npm install
-   ```
+📦 Components, Props, and State
 
-2. Start the app
+📝 Rendering lists with FlatList
 
-   ```bash
-   npx expo start
-   ```
+🔀 Navigation using React Navigation (Stack + Bottom Tabs)
 
-In the output, you'll find options to open the app in a
+🎨 Styling with StyleSheet
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+📱 Modal popups for product details
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+----------------------------------------
 
-## Get a fresh project
+## 🎯 Features
 
-When you're ready, run:
+Browse categories (Cars, Electronics, Jobs, Property).
 
-```bash
-npm run reset-project
+View product listings with title, price, image, and time.
+
+Open a product to see details (price, description, seller status).
+
+Navigate between Home, My Ads, and Profile using a Bottom Tab Navigator.
+
+Dummy data only – no backend connection.
+
+-----------------------------------------
+
+## 🛠️ Tech Stack
+
+React Native
+
+Expo
+
+React Navigation
+
+Expo Vector Icons
+
+## 📂 Project Structure
+
+```
+app/
+ ├── _layout.tsx        # Root layout with Stack Navigator
+ ├── +not_found.tsx
+ ├── tabs/              # Bottom Tab Screens
+ │   ├── _layout.tsx    # Tab Navigator
+ │   ├── index.tsx       # Home screen with product grid
+ │   ├── post-ad.tsx      # User's ads screen
+ │   ├── profile.tsx    # Profile screen
+     ├── search.tsx    # search screen
+     ├── chat.tsx    # Chat screen
+ 
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## ⚙️ Installation & Setup
 
-## Learn more
+Clone this repository:
+```
+git clone https://github.com/your-username/ikman-clone-app.git
+cd ikman-clone-app
+```
+Install dependencies:
+```
+npm install
+```
+Start the project:
+```
+npx expo start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+## Run the app:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+On Android → use Expo Go app or emulator
 
-## Join the community
+On iOS → use Expo Go app or simulator
 
-Join our community of developers creating universal apps.
+## 📸 Screenshots
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### HomePage
+<img src="https://github.com/user-attachments/assets/8615e4e8-0ee9-487c-b96b-3a883aa67391" width="300" />
+
+## Pop Up View
+
+<img src="https://github.com/user-attachments/assets/81a573b0-afe6-44c9-8756-d04df246fcfa" width="300" />
+
+## Search Page
+
+<img src="https://github.com/user-attachments/assets/37798c37-b5bb-4fd2-b599-2ec64556a89e" width="300" />
+
+## Post Ad Page
+
+<img src="https://github.com/user-attachments/assets/ca70924c-6e65-4210-84e2-f10d04226370" width="300" />
+
+## MY Chats
+
+<img src="https://github.com/user-attachments/assets/d4dcc26f-2dc1-4976-b85b-41eec8364d03" width="300" />
+
+## My Profile
+
+<img src="https://github.com/user-attachments/assets/c33095f5-4493-488e-9ee4-a039b0304587" width="300" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
