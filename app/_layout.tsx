@@ -7,7 +7,7 @@ export default function Layout() {
   return (
     <Stack
       screenOptions={{
-        headerShown: false, // This hides the header for all screens in this stack
+        headerShown: false, 
         headerStyle: { backgroundColor: colorScheme === 'dark' ? '#1a1a1a' : '#fff' },
         headerTintColor: colorScheme === 'dark' ? '#fff' : '#000',
       }}
